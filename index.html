@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Party Mood Toggle</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ddeaff;
+            margin: 0;
+            overflow: hidden;
+            text-align: center;
+            position: relative;
+        }
+        .farewell-mode {
+            font-family: 'Pacifico', cursive;
+            font-size: 3rem;
+            color: #ff4757;
+            position: absolute;
+            top: 10%;
+            text-align: center;
+            width: 100%;
+        }
+        .toggle-container {
+            position: relative;
+            width: 150px;
+            height: 60px;
+            background: #222;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            cursor: pointer;
+        }
+        .toggle {
+            width: 50px;
+            height: 50px;
+            background: yellow;
+            border-radius: 50%;
+            position: absolute;
+            transition: 0.4s;
+            left: 5px;
+        }
+        .toggle.on {
+            left: 95px;
+            background: white;
+        }
+        .toggle-container.on {
+            background: #001f3f;
+        }
+        .sun {
+            position: absolute;
+            left: 15px;
+            font-size: 30px;
+            color: yellow;
+        }
+        .moon {
+            position: absolute;
+            right: 15px;
+            font-size: 30px;
+            color: white;
+        }
+        /* Confetti */
+        .confetti {
+            position: absolute;
+            top: -10px;
+            width: 10px;
+            height: 10px;
+            background: red;
+            opacity: 0.7;
+            animation: fall 3s linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(720deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="farewell-mode">Farewell Mode</div>
+    <div class="toggle-container" id="toggleContainer">
+        <span class="sun">☀</span>
+        <span class="moon">🌙</span>
+        <div class="toggle" id="toggle"></div>
+    </div>
+
+    <script>
+        function createConfetti() {
+            setInterval(() => {
+                for (let i = 0; i < 50; i++) {
+                    let confetti = document.createElement("div");
+                    confetti.classList.add("confetti");
+                    document.body.appendChild(confetti);
+                    
+                    confetti.style.left = Math.random() * 100 + "vw";
+                    confetti.style.top = -10 + "px";
+                    confetti.style.width = Math.random() * 8 + 5 + "px";
+                    confetti.style.height = confetti.style.width;
+                    confetti.style.backgroundColor = ["#ff4757", "#1e90ff", "#2ed573", "#ffa502", "#eccc68"][Math.floor(Math.random() * 5)];
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + "s";
+                    
+                    setTimeout(() => confetti.remove(), 3000);
+                }
+            }, 200);
+        }
+
+        document.getElementById("toggleContainer").addEventListener("click", function() {
+            this.classList.toggle("on");
+            document.getElementById("toggle").classList.toggle("on");
+
+            if (this.classList.contains("on")) {
+                createConfetti();
+                setTimeout(() => {
+                    window.location.href = "main.html";
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+</html>
